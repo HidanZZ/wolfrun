@@ -179,10 +179,8 @@ createPlatforms(){
 addPlatform(posX, posY, platformWidth) {
   this.platformAdded += 1;
   let platform;
-  console.log(this.platformAdded);
   
   if (this.platformPool.getLength()) {
-    console.log('here');
     
     platform = this.platformPool.getFirst();
     platform.x = posX;
@@ -201,7 +199,6 @@ addPlatform(posX, posY, platformWidth) {
     platform.body.setSize(platform.body.width, platform.body.height - 10);
     this.platformGroup.add(platform);
   }
-  console.log(this.platformGroup);
   
   this.nextPlatformDistance = Phaser.Math.Between(80, 300);
 
@@ -335,7 +332,6 @@ createParticles(){
   this.physics.add.existing(deathZone,true)
   // deathZone.body.setImmovable(true);
   this.gas=this.physics.add.collider(this.wolf,deathZone,()=>{
-    console.log('dead');
     this.gas.active=false
     this.dead()
     
@@ -422,7 +418,6 @@ dead(){
         })
         this.input.keyboard.on('keydown', (event) => {
           if(event.code=='Enter'){
-            console.log('enter');
             
             if (!this.started) {
               this.inputCheck()

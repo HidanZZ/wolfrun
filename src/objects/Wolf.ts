@@ -53,7 +53,6 @@ dead:boolean = false;
             }
             if (this.x<120  ) {
           
-            console.log(this.x);
             
                 this.body.setGravityX(0)
                 this.body.setVelocityX(0)
