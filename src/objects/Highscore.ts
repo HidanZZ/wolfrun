@@ -39,9 +39,9 @@ export default class Highscore extends Phaser.GameObjects.Container {
                 this.add([rank, name1, scoreN])
 
                 if (i >= 1) {
-                    rank.y = prevRank.y + 18;
-                    name1.y = prevName.y + 18;
-                    scoreN.y = prevScore.y + 18;
+                    rank.y = prevRank.y + 15;
+                    name1.y = prevName.y + 15;
+                    scoreN.y = prevScore.y + 15;
                 }
 
                 prevRank = rank;

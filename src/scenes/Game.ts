@@ -65,6 +65,7 @@ init(data:any) {
       if(event.code=='Space'){
         if (!this.highscoreVisible) {
           this.input.keyboard.removeListener('keydown',d)
+         
           this.tweens.add({
             targets: this.UIContainer,
             y:-1.5*this.scale.height, // '+=100'
@@ -72,7 +73,7 @@ init(data:any) {
             duration: 1500,
             repeat: 0,
             // yoyo: true,
-            onComplete:this.createExplosion(this)
+            onComplete:this.createInstructions(this)
             })
         }
        
@@ -83,6 +84,51 @@ init(data:any) {
    
     
     
+  }
+  createInstructions(this){
+    let instruct=this.add.container(this.scale.width/2, this.scale.height).setDepth(999)
+    let text1=this.add.text(0,0,'Controls',{
+      fontFamily:'super',
+      fontSize:'25px',
+      color:'white'
+    }).setOrigin(0.5)
+    let text2=this.add.text(0,30,'W - Jump',{
+      fontFamily:'super',
+      fontSize:'25px',
+      color:'white'
+    }).setOrigin(0.5)
+    let text3=this.add.text(0,50,'S - Instant Dropdown',{
+      fontFamily:'super',
+      fontSize:'25px',
+      color:'white'
+    }).setOrigin(0.5)
+    let text4=this.add.text(0,70,'Space - Quick boost',{
+      fontFamily:'super',
+      fontSize:'25px',
+      color:'white'
+    }).setOrigin(0.5)
+    instruct.add([text1,text2,text3,text4])
+    this.highscoreButton.destroy()
+  
+    this.tweens.add({
+      targets: instruct,
+      y:this.scale.height/3, // '+=100'
+      // ease: "Back", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+      duration: 1000,
+      repeat: 0,
+      // yoyo: true,
+      })
+      this.time.delayedCall(2000,()=>{
+        this.tweens.add({
+          targets: instruct,
+          y:-1*this.scale.height, // '+=100'
+          // ease: "Back", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+          duration: 1500,
+          repeat: 0,
+          onComplete:this.createExplosion(this)
+          // yoyo: true,
+          })
+      })
   }
   createGameOver(){
     this.UIContainer = this.add.container(this.scale.width/2, this.scale.height).setDepth(999);
@@ -113,7 +159,8 @@ init(data:any) {
 }
 updateFloor(){
   if (this.started) {
-    this.floor.tilePositionX+=1.6
+    let x=-96-(Math.floor(this.score/100)*4)
+    this.floor.tilePositionX+=(1.6*x)/-96
   }
 }
 createPlatforms(){
@@ -175,6 +222,18 @@ createPlatforms(){
         }
     });
 
+}
+increaseSpeed() {
+  
+  this.floorSpikeGroup.getChildren().forEach((child) =>{
+    child.body.setVelocityX(-96-(Math.floor(this.score/100)*4))
+  })
+  this.platformGroup.getChildren().forEach(platform=>{
+    platform.body.setVelocityX(-100-(Math.floor(this.score/100)*4))
+  })
+  this.spikeGroup.getChildren().forEach(spike=>{
+    spike.body.setVelocityX(-100-(Math.floor(this.score/100)*4))
+  })
 }
 addPlatform(posX, posY, platformWidth) {
   this.platformAdded += 1;
@@ -264,7 +323,6 @@ spawnSpike() {
   this.spikeFloor.reset({ delay: Phaser.Math.Between(3000,6000), callback: this.spawnSpike, callbackScope: this, repeat: 1});
 }
 createExplosion(this){
-  this.highscoreButton.destroy()
   let explo = this.add.group({
     classType:Explosion,
   });
@@ -282,7 +340,7 @@ createExplosion(this){
     
     this.createParticles()
     this.createPlatforms()
-    this.score=0
+    this.score=1000
 this.wolf.body.setGravityX(-50)
 this.scoreText=this.add.text(this.scale.width-10,10,`SCORE: ${this.score}`,{ 
   fontFamily:'super', 
@@ -525,6 +583,7 @@ update(time: number, delta: number) {
 
       this.scoreText.x = this.scale.width - this.scoreText.width - 30;
       this.platformSpawner();
+      this.increaseSpeed()
     }
   
 }
