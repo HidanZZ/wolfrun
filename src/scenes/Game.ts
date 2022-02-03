@@ -159,7 +159,7 @@ init(data:any) {
 }
 updateFloor(){
   if (this.started) {
-    let x=-96-(Math.floor(this.score/100)*4)
+    let x=-96-(Math.floor(this.score/100)*10)
     this.floor.tilePositionX+=(1.6*x)/-96
   }
 }
@@ -226,13 +226,13 @@ createPlatforms(){
 increaseSpeed() {
   
   this.floorSpikeGroup.getChildren().forEach((child) =>{
-    child.body.setVelocityX(-96-(Math.floor(this.score/100)*4))
+    child.body.setVelocityX(-96-(Math.floor(this.score/100)*10))
   })
   this.platformGroup.getChildren().forEach(platform=>{
-    platform.body.setVelocityX(-100-(Math.floor(this.score/100)*4))
+    platform.body.setVelocityX(-100-(Math.floor(this.score/100)*10))
   })
   this.spikeGroup.getChildren().forEach(spike=>{
-    spike.body.setVelocityX(-100-(Math.floor(this.score/100)*4))
+    spike.body.setVelocityX(-100-(Math.floor(this.score/100)*10))
   })
 }
 addPlatform(posX, posY, platformWidth) {
@@ -320,7 +320,7 @@ spawnSpike() {
   this.floorSpikeGroup.add(floorSpike);
   }
   
-  this.spikeFloor.reset({ delay: Phaser.Math.Between(3000,6000), callback: this.spawnSpike, callbackScope: this, repeat: 1});
+  this.spikeFloor.reset({ delay: Phaser.Math.Between(3000-this.score,6000-this.score), callback: this.spawnSpike, callbackScope: this, repeat: 1});
 }
 createExplosion(this){
   let explo = this.add.group({

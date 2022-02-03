@@ -77,7 +77,7 @@ dead:boolean = false;
        
     } 
     speedup(){
-        if (!this.dead) {
+        if (!this.dead && !this.body.touching.right) {
             if (this.x<120) {
                 this.x+=1
             }
