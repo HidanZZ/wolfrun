@@ -340,7 +340,7 @@ createExplosion(this){
     
     this.createParticles()
     this.createPlatforms()
-    this.score=1000
+    this.score=0
 this.wolf.body.setGravityX(-50)
 this.scoreText=this.add.text(this.scale.width-10,10,`SCORE: ${this.score}`,{ 
   fontFamily:'super', 
